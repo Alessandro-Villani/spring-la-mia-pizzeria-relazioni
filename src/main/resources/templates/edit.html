@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<main class="container py-5">
+		<form class="d-flex flex-column align-items-center" th:action="@{/pizzas/update/{id} (id=*{id})}" method="POST" th:object="${pizza}">
+			<h1 class="mb-3">Modifica Pizza</h1>
+			<label>Nome</label>
+			<input class="mb-3" type="text" name="name" th:value="*{name}">
+			<small 
+				class="text-danger mb-3"
+				th:if="${errors != null && errors.hasFieldErrors('name')}"
+			>
+				[[ ${errors.getFieldError('name').defaultMessage} ]]
+			</small>
+			<label>Url immagine</label>
+			<input class="mb-3" type="text" name="imageUrl" th:value="*{imageUrl}">
+			<small 
+				class="text-danger mb-3"
+				th:if="${errors != null && errors.hasFieldErrors('imageUrl')}"
+			>
+				[[ ${errors.getFieldError('imageUrl').defaultMessage} ]]
+			</small>
+			<label>Prezzo</label>
+			<input class="mb-3" type="number" step="0.01" name="price" th:value="*{price}">
+			<small 
+				class="text-danger mb-3"
+				th:if="${errors != null && errors.hasFieldErrors('price')}"
+			>
+				[[ ${errors.getFieldError('price').defaultMessage} ]]
+			</small>
+			<label>Descrizione</label>
+			<textarea  class="mb-3" rows="5" cols="50" name="description" >[[ *{description} ]]</textarea>
+			<small 
+				class="text-danger mb-3"
+				th:if="${errors != null && errors.hasFieldErrors('description')}"
+			>
+				[[ ${errors.getFieldError('description').defaultMessage} ]]
+			</small>
+			<button class="btn btn-success">Modifica</button>
+		</form>
+	</main>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<main class="container">
+		<div th:unless="${pizzaList.isEmpty()}">
+			<h1 class="text-center my-5 ">Le nostre pizze</h1>
+			<div class="text-center mb-5">
+				<a class="btn btn-success" th:href="@{pizzas/create}">Aggiungi Pizza</a>
+			</div>
+			<form class="d-flex justify-content-center mb-3" th:action="@{/pizzas}" method="POST">
+				<input class="me-2" type="text" name="name" th:value=${searchTerm}>
+				<button class="btn btn-secondary">Cerca</button>			
+			</form>		
+			<div class="row row-cols-3 justify-content-center">
+				<div class="col d-flex flex-column mb-3" th:each="pizza : ${pizzaList}" th:object="${pizza}">
+					<div class="card h-100 d-flex flex-column p-5 text-center">
+						<h3 class="mb-3">[[ *{name} ]]</h3>
+						<img class="img-fluid mb-3" th:alt="*{name}" th:src="*{imageUrl}">
+						<h5 class="mb-3">Ingredienti</h5>
+						<p class="mb-5">[[ *{description} ]]</p>
+						<p class="mb-3">prezzo: [[ *{price} ]] E</p>
+						<a class="btn btn-primary mb-3" th:href="@{/pizzas/{id} (id=*{id})}">Dettagli</a>
+						<div class="buttons row justify-content-center">
+							<form class="col-4" th:action="@{/pizzas/delete/{id} (id=*{id})}" method="post">
+								<button th:href class="btn btn-danger">Elimina</button>
+							</form>
+							<a th:href="@{/pizzas/edit/{id} (id=*{id})}" class="col-4 btn btn-warning">Modifica</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:if="${pizzaList.isEmpty()}">
+			<h1 class="text-center my-5 ">Non ci sono pizze</h1>
+			<div class="text-center">
+				<a class="btn btn-success" th:href="@{pizzas/create}">Aggiungi Pizza</a>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

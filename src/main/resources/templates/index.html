@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
 <title>Insert title here</title>
 </head>
@@ -23,7 +23,7 @@
 						<img class="img-fluid mb-3" th:alt="*{name}" th:src="*{imageUrl}">
 						<h5 class="mb-3">Ingredienti</h5>
 						<p class="mb-5">[[ *{description} ]]</p>
-						<p class="mb-3">prezzo: [[ *{price} ]] E</p>
+						<p class="mb-3">prezzo: [[ *{price} ]]€</p>
 						<a class="btn btn-primary mb-3" th:href="@{/pizzas/{id} (id=*{id})}">Dettagli</a>
 						<div class="buttons row justify-content-center">
 							<form class="col-4" th:action="@{/pizzas/delete/{id} (id=*{id})}" method="post">

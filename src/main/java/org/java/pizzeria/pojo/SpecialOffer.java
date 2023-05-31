@@ -7,6 +7,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class SpecialOffer {
@@ -15,9 +21,17 @@ public class SpecialOffer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotBlank(message = "Il titolo deve essere inserito")
 	private String title;
+	@NotNull(message = "La data iniziale deve essere specificato")
 	private LocalDate startDate;
+	@NotNull(message = "La data finale deve essere specificato")
+	@Future(message = "La data finale deve essere nel futuro")
 	private LocalDate endDate;
+	@NotNull(message = "Lo sconto deve essere specificato")
+	@Positive(message = "Lo sconto deve essere positivo")
+	@Min(value = 1, message = "Lo sconto deve essere compreso tra 1 e 100")
+	@Max(value = 100, message = "Lo sconto deve essere compreso tra 1 e 100")
 	private Integer discountPercentage;
 	
 	@ManyToOne

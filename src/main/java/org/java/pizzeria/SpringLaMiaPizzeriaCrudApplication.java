@@ -1,9 +1,13 @@
 package org.java.pizzeria;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.java.pizzeria.pojo.Pizza;
+import org.java.pizzeria.pojo.SpecialOffer;
 import org.java.pizzeria.services.PizzaService;
+import org.java.pizzeria.services.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +18,8 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PizzaService pizzaService;
+	@Autowired
+	private SpecialOfferService specialOfferService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
@@ -37,6 +43,24 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		List<Pizza> pizze = pizzaService.findAll();
 		
 		System.out.println(pizze);
+		
+		SpecialOffer s1 = new SpecialOffer("under 18", LocalDate.now(), LocalDate.of(2023, 06, 07), 20, p1);
+		SpecialOffer s2 = new SpecialOffer("over 60", LocalDate.now(), LocalDate.of(2023, 06, 15), 30, p1);
+		SpecialOffer s3 = new SpecialOffer("2x1", LocalDate.now(), LocalDate.of(2023, 06, 12), 50, p2);
+		SpecialOffer s4 = new SpecialOffer("special discount", LocalDate.now(), LocalDate.of(2023, 06, 25), 15, p4);
+		
+		specialOfferService.save(s1);
+		specialOfferService.save(s2);
+		specialOfferService.save(s3);
+		specialOfferService.save(s4);
+		
+		for(Pizza pizza : pizze) {
+			
+			Optional<Pizza> optPizzaOffer = pizzaService.findByIdWithSpecialOffer(pizza.getId());
+			Pizza pizzaOffer = optPizzaOffer.get();
+			System.out.println(pizzaOffer.getSpecialOffers());
+			
+		}
 		
 		
 	}

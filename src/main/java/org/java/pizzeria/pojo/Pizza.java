@@ -1,10 +1,13 @@
 package org.java.pizzeria.pojo;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
@@ -24,6 +27,9 @@ public class Pizza {
 	private String imageUrl;
 	@Min(value = 0, message = "Il prezzo deve essere un valore positivo")
 	private Double price;
+	
+	@OneToMany(mappedBy = "pizza")
+	private List<SpecialOffer> specialOffers;
 	
 	public Pizza() {}
 	
@@ -74,8 +80,16 @@ public class Pizza {
 
 	public void setPrice(Double price) {
 		this.price = price;
-	}
+	}	
 	
+	public List<SpecialOffer> getSpecialOffers() {
+		return specialOffers;
+	}
+
+	public void setSpecialOffers(List<SpecialOffer> specialOffers) {
+		this.specialOffers = specialOffers;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

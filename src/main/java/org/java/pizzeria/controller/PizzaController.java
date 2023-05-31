@@ -47,7 +47,7 @@ public class PizzaController {
 	@GetMapping("/pizzas/{id}")
 	public String goToPizzaDetails(Model model, @PathVariable("id") int id) {
 		
-		Optional<Pizza> optPizza = pizzaService.findById(id);
+		Optional<Pizza> optPizza = pizzaService.findByIdWithSpecialOffer(id);
 		
 		Pizza pizza = optPizza.get();
 		

@@ -48,11 +48,6 @@ public class SpecialOfferController {
 			return "special-offer-create";
 		}
 		
-		Optional<Pizza> optPizza = pizzaService.findById(pizzaId);
-		Pizza pizza = optPizza.get();
-		
-		specialOffer.setPizza(pizza);
-		
 		specialOfferService.save(specialOffer);
 		
 		return "redirect:/pizzas/" + specialOffer.getPizza().getId();
@@ -83,11 +78,6 @@ public class SpecialOfferController {
 			return "special-offer-edit";
 			
 		}
-		
-		Optional<Pizza> optPizza = pizzaService.findById(pizzaId);
-		Pizza pizza = optPizza.get();
-		
-		specialOffer.setPizza(pizza);
 		
 		specialOfferService.save(specialOffer);
 		

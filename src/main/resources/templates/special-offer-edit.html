@@ -41,7 +41,8 @@
 		>
 			[[ ${errors.getFieldError('discountPercentage').defaultMessage} ]]
 		</small>
-		<button class="btn btn-success">Crea</button>
+		<input type="hidden" name="pizza" th:value="${pizzaId}">
+		<button class="btn btn-success">Modifica</button>
 	</form>
 	</main>
 

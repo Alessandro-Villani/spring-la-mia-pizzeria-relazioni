@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:replace="frags/header :: header"></th:block>
+	<main class="container text-center">
+		<h1 class="my-5">Ingredienti</h1>
+		<a th:href="@{ingredients/create}" class="btn btn-success mb-3">Aggiungi Ingrediente</a>
+		<div th:each="ingredient : ${ingredients}" th:object="${ingredient}" class="row border p-3 mb-3">
+			<div class="col-8 d-flex align-items-center text-start">[[ *{name} ]]</div>
+			<div class="col-2">
+				<a class="btn btn-warning" th:href="@{ingredients/edit/{id} (id=*{id})}">Modifica</a>
+			</div>
+			<form class="col-2" th:action="@{ingredients/delete/{id} (id=*{id})}" method="POST">
+				<button class="btn btn-danger">Elimina</button>
+			</form>
+		</div>
+	</main>
+</body>
+</html>

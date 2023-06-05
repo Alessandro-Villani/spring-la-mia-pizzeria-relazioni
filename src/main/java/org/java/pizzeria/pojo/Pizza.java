@@ -1,5 +1,6 @@
 package org.java.pizzeria.pojo;
 
+import java.util.Arrays;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +33,9 @@ public class Pizza {
 	@OneToMany(mappedBy = "pizza")
 	private List<SpecialOffer> specialOffers;
 	
+	@ManyToMany
+	private List<Ingredient> ingredients;
+	
 	public Pizza() {}
 	
 	public Pizza(String name, String description, String imageUrl, Double price) {
@@ -39,6 +44,14 @@ public class Pizza {
 		setDescription(description);
 		setImageUrl(imageUrl);
 		setPrice(price);
+		
+	}
+	
+	public Pizza(String name, String description, String imageUrl, Double price, Ingredient... ingredients) {
+		
+		this(name, description, imageUrl, price);
+		
+		setIngredients(ingredients);
 		
 	}
 
@@ -88,6 +101,26 @@ public class Pizza {
 
 	public void setSpecialOffers(List<SpecialOffer> specialOffers) {
 		this.specialOffers = specialOffers;
+	}
+	
+	
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+	
+	public void setIngredients(Ingredient[] ingredient) {
+		
+		setIngredients(Arrays.asList(ingredient));
+	}
+	
+	public void removeIngredient(Ingredient ingredient) {
+		
+		ingredients.remove(ingredient);
+		
 	}
 
 	@Override

@@ -3,8 +3,12 @@ package org.java.pizzeria.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.java.pizzeria.pojo.Ingredient;
 import org.java.pizzeria.pojo.Pizza;
+import org.java.pizzeria.pojo.SpecialOffer;
+import org.java.pizzeria.services.IngredientService;
 import org.java.pizzeria.services.PizzaService;
+import org.java.pizzeria.services.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +26,12 @@ public class PizzaController {
 
 	@Autowired
 	private PizzaService pizzaService;
+	
+	@Autowired
+	private SpecialOfferService specialOfferService;
+	
+	@Autowired
+	private IngredientService ingredientService;
 	
 	@GetMapping("/pizzas")
 	public String goToPizzaIndex(Model model) {
@@ -60,6 +70,10 @@ public class PizzaController {
 	@GetMapping("pizzas/create")
 	public String getCreate(Model model) {
 		
+		List<Ingredient> ingredients = ingredientService.findAll();
+		
+		
+		model.addAttribute("ingredients", ingredients);
 		model.addAttribute("pizza", new Pizza());
 		
 		return "create";
@@ -84,10 +98,15 @@ public class PizzaController {
 	@GetMapping("pizzas/edit/{id}")
 	public String editPizza(Model model, @PathVariable int id) {
 		
+		
+		
 		Optional<Pizza> optPizza = pizzaService.findById(id);
 		Pizza pizza = optPizza.get();
 		
+		List<Ingredient> ingredients = ingredientService.findAll();
+		
 		model.addAttribute("pizza", pizza);
+		model.addAttribute("ingredients", ingredients);
 		
 		return "edit";
 		
@@ -114,6 +133,14 @@ public class PizzaController {
 	
 	@PostMapping("pizzas/delete/{id}")
 	public String deletePizza(@PathVariable("id") int id) {
+		
+		Pizza pizza = pizzaService.findById(id).get();
+		
+		for(SpecialOffer so : pizza.getSpecialOffers()) {
+			
+			specialOfferService.deleteById(so.getId());
+			
+		}
 		
 		pizzaService.deleteById(id);
 		

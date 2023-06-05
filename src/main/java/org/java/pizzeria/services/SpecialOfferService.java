@@ -32,5 +32,11 @@ public class SpecialOfferService {
 		return specialOfferRepo.save(specialOffer);
 		
 	}
+	
+	public void deleteById(int id) {
+		
+		specialOfferRepo.deleteById(id);
+		
+	}
 
 }

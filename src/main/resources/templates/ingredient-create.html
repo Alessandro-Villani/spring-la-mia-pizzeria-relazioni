@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:replace="frags/header :: header"></th:block>
+	<form th:object="${ingredient}" class="container text-center" method="POST">
+		<h1 class="my-5">Crea ingrediente</h1>
+		<label for="name">Nome ingrediente</label>
+		<input id="name" type="text" name="name" th:value="*{name}">
+		<br>
+		<small 
+			class="text-danger mb-3"
+			th:if="${errors != null && errors.hasFieldErrors('name')}"
+		>
+			[[ ${errors.getFieldError('name').defaultMessage} ]]
+		</small>
+		<br>
+		<button class="btn btn-success mt-3">Aggiungi</button>
+	</form>
+</body>
+</html>

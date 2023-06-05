@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<th:block th:replace="frags/header :: header"></th:block>
 	<main class="container">
 		<div th:unless="${pizzaList.isEmpty()}">
 			<h1 class="text-center my-5 ">Le nostre pizze</h1>
@@ -21,9 +22,15 @@
 					<div class="card h-100 d-flex flex-column p-5 text-center">
 						<h3 class="mb-3">[[ *{name} ]]</h3>
 						<img class="img-fluid mb-3" th:alt="*{name}" th:src="*{imageUrl}">
-						<h5 class="mb-3">Ingredienti</h5>
+						<h5 class="mb-3">Descrizione</h5>
 						<p class="mb-5">[[ *{description} ]]</p>
-						<p class="mb-3">prezzo: [[ *{price} ]]€</p>
+						<p class="mb-5">prezzo: [[ *{price} ]]€</p>
+						<div class="mb-5" th:unless="*{ingredients.isEmpty()}" >
+						<h5>Ingredienti</h5>
+						<ul class="list-unstyled">
+							<li th:each="ingredient : *{ingredients}">[[ ${ingredient.name} ]]</li>
+						</ul>						
+						</div>
 						<a class="btn btn-primary mb-3" th:href="@{/pizzas/{id} (id=*{id})}">Dettagli</a>
 						<div class="buttons row justify-content-center">
 							<form class="col-4" th:action="@{/pizzas/delete/{id} (id=*{id})}" method="post">

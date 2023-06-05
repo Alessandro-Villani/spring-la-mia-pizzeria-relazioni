@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<th:block th:replace="frags/header :: header"></th:block>
 	<main class="container py-5">
 	<form class="d-flex flex-column align-items-center" th:action="@{'/pizzas/' + ${pizzaId} + '/special-offer/create'}" method="POST" th:object="${specialOffer}">
 		<h1 class="mb-3">Crea Offerta</h1>

@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<th:block th:replace="frags/header :: header"></th:block>
 	<main class="container py-5">
 		<form class="d-flex flex-column align-items-center" th:action="@{/pizzas/update/{id} (id=*{id})}" method="POST" th:object="${pizza}">
 			<h1 class="mb-3">Modifica Pizza</h1>
@@ -41,7 +42,12 @@
 			>
 				[[ ${errors.getFieldError('description').defaultMessage} ]]
 			</small>
-			<button class="btn btn-success">Modifica</button>
+			<h6 class="mb-3">Ingredienti</h6>
+			<div class="mb-2" th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+				<input type="checkbox" th:id="${'ingredient-' + ingredient.id}" th:value="*{id}" name="ingredients" th:checked="${pizza.ingredients.contains(ingredient)}">
+				<label th:for="${'ingredient-' + ingredient.id}">[[ *{name} ]]</label>
+			</div>
+			<button class="btn btn-success mt-3">Modifica</button>
 		</form>
 	</main>
 
